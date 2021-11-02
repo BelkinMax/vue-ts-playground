@@ -1,50 +1,47 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import axios from 'axios';
-import { reactive } from "@vue/reactivity";
-import { onMounted, watchEffect } from '@vue/runtime-core';
-
+import { onMounted } from '@vue/runtime-core';
 import HelloWorld from "@/components/HelloWorld.vue";
+import { computed, ref } from 'vue';
+import { useStore } from 'vuex';
 
-const message = "Hello world";
-const state = reactive({
-  counter: 0,
-  joke: null,
-  avatarUrl: null
+const { getters } = useStore();
+
+const counter = ref(0);
+const joke = ref(null);
+const avatarUrl = ref(null);
+
+const message = computed(() => getters.getJoke);
+
+onMounted(() => {
+  setCounter();
+  getChuckJoke();
 })
 
 const resetCounter = () => {
-  state.counter = 0;
+  counter.value = 0;
 };
 
 const getChuckJoke = async () => {
   const { data } = await axios.get("https://api.chucknorris.io/jokes/random");
 
   if (data.id) {
-    state.joke = data.value;
-    state.avatarUrl ??= data.icon_url;
+    joke.value = data.value;
+    avatarUrl.value ??= data.icon_url;
   }
 }
 
 const setCounter = () => {
-  setInterval(() => state.counter++, 1000);
+  setInterval(() => counter.value++, 1000);
 }
-
-watchEffect(() => {
-  console.log(state.counter);
-})
-
-onMounted(() => {
-  setCounter();
-  getChuckJoke()
-})
 </script>
 
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
-    <img v-if="state.avatarUrl" :src="state.avatarUrl" alt="Chuck" />
-    <HelloWorld :counter="state.counter" />
-    <p>{{ state.joke }}</p>
+    <img v-if="avatarUrl" :src="avatarUrl" alt="Chuck" />
+    <HelloWorld :counter="counter" />
+    <p>{{ joke }}</p>
     <div class="flex-container">
       <button @click="resetCounter">Reset Counter</button>
       <button @click="getChuckJoke">Get new joke</button>

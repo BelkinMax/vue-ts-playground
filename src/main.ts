@@ -3,10 +3,10 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
-const Vue = createApp(App);
+const app = createApp(App);
 
-Vue
+app
 .use(store)
 .use(router);
 
-Vue.mount("#app")
+app.mount("#app");

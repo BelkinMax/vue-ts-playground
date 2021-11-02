@@ -1,12 +1,14 @@
-import { createStore } from 'vuex'
+import { createStore, StoreOptions } from 'vuex'
+import { jokes } from './jokes';
+import { RootState } from './types';
 
-export default createStore({
+const store: StoreOptions<RootState> = {
   state: {
-  },
-  mutations: {
-  },
-  actions: {
+    message: 'Hello from Vuex!'
   },
   modules: {
+    jokes
   }
-})
+}
+
+export default createStore(store);
