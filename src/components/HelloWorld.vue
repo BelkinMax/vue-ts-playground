@@ -10,6 +10,6 @@ const props = withDefaults(defineProps<ICounter>(), {
 
 <template>
   <div>
-    <p>Counter {{ counter }}</p>
+    <p>Joke number {{ counter }}</p>
   </div>
 </template>
