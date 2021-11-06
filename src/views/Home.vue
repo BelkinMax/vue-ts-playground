@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import axios from 'axios';
 import { onMounted } from '@vue/runtime-core';
 import HelloWorld from "@/components/HelloWorld.vue";
 import { computed, ref } from 'vue';
@@ -26,7 +25,6 @@ const setJoke = async () => {
   joke.value = getters.getJokeValue;
   avatarUrl.value ??= getters.getJokeIconUrl;
 }
-
 </script>
 
 <template>
@@ -36,7 +34,7 @@ const setJoke = async () => {
     <HelloWorld :counter="jokeCounter" />
     <p>{{ joke }}</p>
     <div class="flex-container">
-      <button @click="setJoke">Get new joke</button>
+      <button @click="setJoke">OMG this is so fun I want more</button>
     </div>
   </div>
 </template>
